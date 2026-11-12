@@ -31,9 +31,10 @@ const StyledNavLink = styled(SimpleNavLink)`
 
 const StyledObject = styled.img`
   height: 30px;
+  margin: 0px 10px;
 `;
 
-export default function Nav() {
+export default function Nav({ amount }) {
   return (
     <NavBar>
       <SimpleNavLink to="/">Misc Shopping</SimpleNavLink>
@@ -48,10 +49,13 @@ export default function Nav() {
         </StyledNavLink>
         <StyledNavLink to="cart">
           {({ isActive }) => (
-            <StyledObject
-              src={isActive ? orangeShoppingCart : shoppingCart}
-              alt="Cart"
-            ></StyledObject>
+            <>
+              <StyledObject
+                src={isActive ? orangeShoppingCart : shoppingCart}
+                alt="Cart"
+              ></StyledObject>
+              <span>{amount}</span>
+            </>
           )}
         </StyledNavLink>
       </div>

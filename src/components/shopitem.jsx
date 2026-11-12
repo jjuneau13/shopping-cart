@@ -5,7 +5,7 @@ const StyledDiv = styled.div`
   width: 30vw;
   background-color: #c8c8c8;
   border-radius: 10px;
-  padding: 10px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,8 +19,6 @@ const AddtoCart = styled.button`
   border-radius: 3px;
   width: 100px;
   height: 25px;
-  position: relative;
-  bottom: 5px;
 `;
 
 const StyledImg = styled.img`
@@ -40,13 +38,17 @@ const InnerDiv = styled.div`
 const StyledP = styled.p``;
 
 const StyledInput = styled.input`
-  vertical-align: middle;
+  background-color: rgba(100, 100, 100, 10);
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 3px;
 `;
 
 const CartDiv = styled.div`
   display: flex;
   align-items: center;
-  vertical-align: middle;
+  gap: 10px;
 `;
 
 export default function ShopItem({
@@ -57,7 +59,11 @@ export default function ShopItem({
   amount,
   setAmount,
 }) {
-  const handleChange = (e) => setAmount(Number(e.target.value));
+  const handleChange = (e) => {
+    if (e.target.value >= 0 && e.target.value <= 1000) {
+      setAmount(Number(e.target.value));
+    }
+  };
 
   return (
     <StyledDiv>
@@ -65,11 +71,13 @@ export default function ShopItem({
       <InnerDiv>
         <h2>{title}</h2>
         <StyledP>{description}</StyledP>
-        <p>{price}</p>
+        <p>${price.toFixed(2)}</p>
         <CartDiv>
           <StyledInput
             name="amount"
             type="number"
+            min={0}
+            max={1000}
             value={amount}
             onChange={handleChange}
           />

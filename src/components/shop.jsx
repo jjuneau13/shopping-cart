@@ -22,18 +22,21 @@ export default function Shop() {
   if (loading) return <StyledDiv>Loading...</StyledDiv>;
   if (error) return <StyledDiv>{error}</StyledDiv>;
 
-  const shop = shopItems.map((item) => (
-    <ShopItem
-      title={item.title}
-      image={item.image}
-      description={item.category}
-      price={item.price}
-      key={item.id}
-      amount={cart[item.id] ?? 0}
-      id={item.id}
-      setAmount={(value) => setCart({ ...cart, [item.id]: value })}
-    />
-  ));
+  const shop = Object.entries(shopItems).map((entry) => {
+    const [id, item] = entry;
+    return (
+      <ShopItem
+        title={item.title}
+        image={item.image}
+        description={item.category}
+        price={item.price}
+        key={id}
+        amount={cart[id] ?? 0}
+        id={id}
+        setAmount={(value) => setCart({ ...cart, [id]: value })}
+      />
+    );
+  });
 
   return <StyledDiv>{shop}</StyledDiv>;
 }

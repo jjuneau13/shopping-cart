@@ -18,15 +18,24 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        setShopItems(data);
+        const temp = {};
+        data.forEach((entry) => {
+          const { id, ...rest } = entry;
+          temp[id] = { ...rest };
+        });
+        setShopItems(temp);
       })
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   }, []);
+  const cartAmount = Object.values(cart).reduce(
+    (prev, curr) => Number(prev) + Number(curr),
+    0,
+  );
 
   return (
     <>
-      <Nav></Nav>
+      <Nav amount={cartAmount}></Nav>
       <Outlet context={[cart, setCart, shopItems, error, loading]} />
     </>
   );
